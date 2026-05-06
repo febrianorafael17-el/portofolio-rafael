@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects - My Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: radial-gradient(circle at 20% 20%, rgba(102, 126, 234, 0.25), transparent 40%),
+                radial-gradient(circle at 80% 80%, rgba(240, 147, 251, 0.2), transparent 40%),
+                #0f172a;
+            color: #e2e8f0;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 80px 0px 0px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Navbar Styles */
+        /* Navbar Styles */
+        nav {
+            position: fixed;
+            top: -80px;
+            /* Awalnya disembunyikan di atas luar layar */
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(12px);
+            border-radius: 50px;
+            padding: 12px 40px;
+            z-index: 1000;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            width: 90%;
+            max-width: 900px;
+            opacity: 0;
+            /* Awalnya dibuat transparan */
+            transition: top 0.6s ease, opacity 0.6s ease;
+            /* Durasi animasi */
+        }
+
+        /* Class ini yang akan dipanggil JS untuk memunculkan navbar */
+        nav.show {
+            top: 20px;
+            opacity: 1;
+        }
+
+        nav .nav-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+            width: 100%;
+        }
+
+        nav .logo {
+            color: white;
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-right: 10px;
+            text-decoration: none;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+
+        nav ul li {
+            position: relative;
+        }
+
+        nav ul li a {
+            position: relative;
+            color: #e2e8f0;
+            text-decoration: none;
+            font-size: 0.9em;
+            padding: 5px 10px;
+            transition: 0.3s;
+        }
+
+        nav ul li a::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -5px;
+            width: 0%;
+            height: 2px;
+            background: linear-gradient(90deg, #38bdf8, #f472b6);
+            transition: width 0.3s ease;
+        }
+
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        /* Active Link */
+        nav ul li a.active {
+            color: #38bdf8;
+        }
+
+        nav ul li a.active::after {
+            width: 100%;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            flex: 1;
+            width: 100%;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        .page-header {
+            text-align: center;
+            margin-bottom: 60px;
+            animation: fadeInDown 0.8s ease;
+        }
+
+        .page-header h1 {
+            font-size: 3em;
+            margin-bottom: 15px;
+            margin-top: 20px;
+            background: linear-gradient(135deg, #38bdf8, #f472b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-header p {
+            font-size: 1.1em;
+            color: #cbd5e1;
+        }
+
+        /* Cards Container */
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        /* Card Styles */
+        .card {
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            border-radius: 15px;
+            padding: 40px 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .card:hover::before {
+            left: 100%;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(148, 163, 184, 0.5);
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.2);
+        }
+
+        .card-icon {
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            color: #38bdf8;
+            transition: all 0.4s ease;
+        }
+
+        .card:hover .card-icon {
+            font-size: 4em;
+            color: #f472b6;
+            transform: rotate(-10deg) scale(1.1);
+        }
+
+        .card h2 {
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            color: #f1f5f9;
+        }
+
+        .card p {
+            color: #cbd5e1;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            font-size: 0.95em;
+        }
+
+        .card-features {
+            text-align: left;
+            margin: 25px 0;
+            padding: 20px;
+            background: rgba(15, 23, 42, 0.4);
+            border-radius: 10px;
+            list-style: none;
+        }
+
+        .card-features li {
+            padding: 8px 0;
+            color: #cbd5e1;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-features li::before {
+            content: "✓";
+            color: #38bdf8;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .card:nth-child(2) .card-icon {
+            color: #06b6d4;
+        }
+
+        .card:nth-child(2):hover .card-icon {
+            color: #ec4899;
+        }
+
+        .card:nth-child(3) .card-icon {
+            color: #a78bfa;
+        }
+
+        .card:nth-child(3):hover .card-icon {
+            color: #f472b6;
+        }
+
+        /* Button */
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #38bdf8, #06b6d4);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            margin-top: 15px;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(56, 189, 248, 0.4);
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card {
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        .card:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .card:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .page-header h1 {
+                font-size: 2em;
+            }
+
+            nav {
+                width: 95%;
+                padding: 10px 15px;
+            }
+
+            nav .nav-container {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 8px;
+            }
+
+            nav ul li a {
+                font-size: 0.8em;
+                padding: 4px 8px;
+            }
+
+            .cards-container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .card {
+                padding: 30px 20px;
+            }
+
+            .card-icon {
+                font-size: 2.5em;
+            }
+        }
+
+        /* Footer Styles */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            margin-top: auto;
+        }
+
+        footer p {
+            margin: 10px 0;
+            font-size: 1em;
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .social-icons a {
+            color: white;
+            font-size: 1.5em;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .social-icons a:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+        .social-icons .ig:hover {
+            background: #E4405F;
+        }
+
+        .social-icons .linkedin:hover {
+            background: #0077b5;
+        }
+
+        .social-icons .github:hover {
+            background: #333;
+        }
+
+        .social-icons .gmail:hover {
+            background: #ea4335;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">RFO</a>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="experience.html">Experience</a></li>
+                <li><a href="Project.html" class="active">Projects</a></li>
+                <li><a href="Contact.html" class="nav-link">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Header -->
+        <div class="page-header">
+            <h1>My Services</h1>
+            <p>Exploring creativity through multiple mediums</p>
+        </div>
+
+        <!-- Cards -->
+        <div class="cards-container">
+            <!-- Card 1: Creative Design -->
+            <div class="card">
+                <div class="card-icon">
+                    <i class="fas fa-palette"></i>
+                </div>
+                <h2>Creative Design</h2>
+                <p>Transform ideas into stunning visual experiences with innovative design solutions</p>
+                <ul class="card-features">
+                    <li>Designer</li>
+                    <li>Visual Communication</li>
+                    <li>Creative Direction</li>
+                    <li>Design Thinking</li>
+                    <li>Creative Ai Content</li>
+                </ul>
+                <a href="Project2.html" class="btn" style="text-decoration: none; display: inline-block;">Learn More</a>
+            </div>
+
+            <!-- Card 2: Photography & Videography -->
+            <div class="card">
+                <div class="card-icon">
+                    <i class="fas fa-film"></i>
+                </div>
+                <h2>Photography & Videography</h2>
+                <p>Creating stunning visual content through photography and videography expertise</p>
+                <ul class="card-features">
+                    <li>Portrait Photography</li>
+                    <li>Event Coverage</li>
+                    <li>Photo & Video Editing</li>
+                    <li>Lighting & Cinematography</li>
+                </ul>
+                <a href="Project3.html" class="btn" style="text-decoration: none; display: inline-block;">Learn More</a>
+            </div>
+
+            <!-- Card 3: Organization -->
+            <div class="card">
+                <div class="card-icon">
+                    <i class="fas fa-tasks"></i>
+                </div>
+                <h2>Organization</h2>
+                <p>Managing workflows and organizing projects for efficient and productive outcomes</p>
+                <ul class="card-features">
+                    <li>Project Management</li>
+                    <li>Content Organization</li>
+                    <li>Team Coordination</li>
+                    <li>Process Planning</li>
+                </ul>
+                <a href="Project4.html" class="btn" style="text-decoration: none; display: inline-block;">Learn More</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Rafael Febriano Orthega.</p>
+        <div class="social-icons">
+            <a href="https://instagram.com/xfebianz_" target="_blank" class="ig">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://linkedin.com/in/rafael-febriano-orthega-23466b408" target="_blank" class="linkedin">
+                <i class="fab fa-linkedin"></i>
+            </a>
+            <a href="https://github.com/febrianorafael17-el" target="_blank" class="github">
+                <i class="fab fa-github"></i>
+            </a>
+            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=orthegarafael14@gmail.com" target="_blank"
+                class="gmail">
+                <i class="fas fa-envelope"></i>
+            </a>
+        </div>
+    </footer>
+    <script>
+        window.addEventListener("load", () => {
+            setTimeout(() => {
+                document.querySelector("nav").classList.add("show");
+            }, 100); // Muncul setelah 0.1 detik halaman dimuat
+        });
+    </script>
+</body>
+
+</html>

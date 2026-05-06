@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experience - Rafael Orthega</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: radial-gradient(circle at 20% 20%, rgba(102, 126, 234, 0.25), transparent 40%),
+                radial-gradient(circle at 80% 80%, rgba(240, 147, 251, 0.2), transparent 40%),
+                #0f172a;
+            color: #e2e8f0;
+            min-height: 100vh;
+        }
+
+        nav {
+            position: fixed;
+            top: -80px;
+            /* awalnya disembunyiin */
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(12px);
+            border-radius: 50px;
+            padding: 12px 40px;
+            z-index: 1000;
+            width: 90%;
+            max-width: 900px;
+            transition: top 0.6s ease, opacity 0.6s ease;
+            opacity: 0;
+        }
+
+        /* saat muncul */
+        nav.show {
+            top: 20px;
+            opacity: 1;
+        }
+
+        nav .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav .logo {
+            color: white;
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-right: 10px;
+            text-decoration: none;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+
+        nav ul li a {
+            color: #e2e8f0;
+            text-decoration: none;
+        }
+
+        nav ul li.active a::after {
+            width: 100%;
+        }
+
+        nav ul li a {
+            position: relative;
+            color: #e2e8f0;
+            text-decoration: none;
+            padding: 5px 0;
+        }
+
+        /* garis bawah (hidden dulu) */
+        nav ul li a::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -4px;
+            width: 0%;
+            height: 2px;
+            background: linear-gradient(90deg, #38bdf8, #f472b6);
+            transition: width 0.3s ease;
+        }
+
+        /* muncul saat hover */
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+            padding: 120px 20px 40px;
+        }
+
+        h2 {
+            font-size: 2.5em;
+            margin-bottom: 40px;
+        }
+
+        .highlight {
+            background: linear-gradient(90deg, #38bdf8, #f472b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .experience-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .experience-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: 0.3s;
+        }
+
+        .experience-item:hover {
+            transform: translateY(-5px);
+            border-color: rgba(99, 102, 241, 0.4);
+        }
+
+        .experience-item h3 {
+            margin-bottom: 5px;
+        }
+
+        .exp-date {
+            font-size: 0.85em;
+            color: #94a3b8;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            margin-top: 40px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 15px;
+        }
+
+        .social-links a {
+            color: white;
+            font-size: 1.5em;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: 0.3s;
+        }
+
+        .social-links a:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+        .experience-list {
+            position: relative;
+            padding-left: 30px;
+        }
+
+        /* garis vertikal */
+        .experience-list::before {
+            content: "";
+            position: absolute;
+            left: 10px;
+            top: 0;
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(to bottom, #38bdf8, #f472b6);
+        }
+
+        /* tiap item */
+        .experience-item {
+            position: relative;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: 0.3s;
+        }
+
+        /* titik bulat */
+        .experience-item::before {
+            content: "";
+            position: absolute;
+            left: -27px;
+            top: 53px;
+            width: 14px;
+            height: 14px;
+            background: #38bdf8;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #38bdf8;
+        }
+
+        /* hover efek */
+        .experience-item:hover::before {
+            background: #f472b6;
+            box-shadow: 0 0 15px #f472b6;
+        }
+
+        .fade-up {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-up.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                transform: translate3d(0, 30px, 0);
+                opacity: 0;
+            }
+
+            to {
+                transform: translate3d(0, 0, 0);
+                opacity: 1;
+            }
+        }
+
+
+        @media (max-width: 768px) {
+            nav {
+                width: 95%;
+                padding: 10px 15px;
+            }
+
+            nav .nav-container {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 8px;
+            }
+
+            nav ul li a {
+                font-size: 0.8em;
+                padding: 4px 8px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">RFO</a>
+
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li class="active"><a href="#">Experience</a></li>
+                <li><a href="Project.html">Projects</a></li>
+                <li><a href="Contact.html" class="nav-link">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h2 class="fade-up">Pengalaman <span class="highlight">Saya</span></h2>
+
+        <div class="experience-list">
+
+            <div class="experience-item fade-up">
+                <h3>Organisasi MPK (Majelis Perwakilan Kelas)</h3>
+                <span class="exp-date">2025 - 2026</span>
+                <ul>
+                    <li> Aktif dalam bidang Desain dan Kreatif</li>
+                    <li> Aktif dalam kepanitian sebagai devisi Kreatif serta Dokumentasi</li>
+                    <li> Aktif sebagai Ketua devisi Kreatif serta Dokumentasi</li>
+                    <li> Bekerja secara TeamWork dan Komunikasi</li>
+                </ul>
+            </div>
+
+            <div class="experience-item fade-up">
+                <h3>Mengikuti Ekstrakurikuler</h3>
+                <span class="exp-date">2025 - 2026</span>
+                <ul>
+                    <li>Menjabat sebagai anggota tim Kreatif.</li>
+                    <li>Pembuatan Video Kreatif untuk akreditasi Perpustakaan SMAN 12 Jakarta.</li>
+                    <li>Pembuatan Video dalam rangka kegiatan Antisipasi Bencana Alam di SMAN 12 Jakarta oleh Dinas
+                        Pendidikan.</li>
+                    <li>Mengikuti setiap rangkaian kegiatan event sekolah menjadi tim Dokumentasi.</li>
+                </ul>
+            </div>
+
+            <div class="experience-item fade-up">
+                <h3>Hard Skills</h3>
+                <span class="exp-date">2025 - 2026</span>
+                <ul>
+                    <li>Menguasai penggunaan CapCut untuk kebutuhan editing video dan produksi konten digital.</li>
+                    <li>Menguasai penggunaan Adobe Lightroom untuk pengolahan dan penyempurnaan fotografi digital.</li>
+                    <li>Menguasai penggunaan Canva dalam desain grafis, presentasi, dan pembuatan konten visual
+                        profesional.</li>
+                    <li>Menguasai penggunaan aplikasi Figma.Menguasai penggunaan Figma untuk desain antarmuka,
+                        prototyping, dan kolaborasi proyek digital.</li>
+                    <li>Memiliki pemahaman dasar dalam pengembangan web, termasuk HTML, CSS, dan konsep dasar
+                        pemrograman.
+
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Rafael Febriano Orthega.</p>
+
+        <div class="social-links">
+            <a href="https://instagram.com/xfebianz_" target="_blank">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/rafael-febriano-orthega-9b1a4b1b6/" target="_blank">
+                <i class="fab fa-linkedin"></i>
+            </a>
+            <a href="https://github.com/febrianorafael17-el" target="_blank">
+                <i class="fab fa-github"></i>
+            </a>
+            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=orthegarafael14@gmail.com" target="_blank">
+                <i class="fas fa-envelope"></i>
+            </a>
+        </div>
+    </footer>
+    <script>
+        const items = document.querySelectorAll('.fade-up');
+
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    // Delay dihitung dari urutan elemen yang muncul berbarengan
+                    // Dikali 0.15 detik biar munculnya estetik bergantian
+                    entry.target.style.transitionDelay = (index * 0.15) + "s";
+                    entry.target.classList.add('show');
+
+                    // (Opsional) Hentikan observasi setelah elemen muncul
+                    // Biar animasinya gak ngulang dari awal pas kamu scroll naik-turun
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.1 // Kurangi dikit thresholdnya biar lebih cepet ke-trigger di HP
+        });
+
+        items.forEach(item => observer.observe(item));
+    </script>
+    <script>
+        window.addEventListener("load", () => {
+            setTimeout(() => {
+                document.querySelector("nav").classList.add("show");
+            }, 100);
+        });
+    </script>
+</body>
+
+</html>

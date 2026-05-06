@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - My Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: radial-gradient(circle at 20% 20%, rgba(102, 126, 234, 0.25), transparent 40%),
+                radial-gradient(circle at 80% 80%, rgba(240, 147, 251, 0.2), transparent 40%),
+                #0f172a;
+            color: #e2e8f0;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Navbar Styles (Sama seperti halaman lain) */
+        /* Navbar Styles */
+        nav {
+            position: fixed;
+            top: -80px;
+            /* Awalnya disembunyikan di atas luar layar */
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(12px);
+            border-radius: 50px;
+            padding: 12px 40px;
+            z-index: 1000;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            width: 90%;
+            max-width: 900px;
+            opacity: 0;
+            /* Awalnya dibuat transparan */
+            transition: top 0.6s ease, opacity 0.6s ease;
+            /* Durasi animasi */
+        }
+
+        /* Class ini yang akan dipanggil JS untuk memunculkan navbar */
+        nav.show {
+            top: 20px;
+            opacity: 1;
+        }
+
+        nav .nav-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+            width: 100%;
+        }
+
+        nav .logo {
+            color: white;
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-right: 10px;
+            text-decoration: none;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+
+        nav ul li {
+            position: relative;
+        }
+
+        nav ul li a {
+            position: relative;
+            color: #e2e8f0;
+            text-decoration: none;
+            font-size: 0.9em;
+            padding: 5px 10px;
+            transition: 0.3s;
+        }
+
+        nav ul li a::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -5px;
+            width: 0%;
+            height: 2px;
+            background: linear-gradient(90deg, #38bdf8, #f472b6);
+            transition: width 0.3s ease;
+        }
+
+        nav ul li a:hover::after,
+        nav ul li.active a::after {
+            width: 100%;
+        }
+
+        nav ul li a:hover,
+        nav ul li.active a {
+            color: #38bdf8;
+        }
+
+        /* === CONTACT SECTION === */
+        .contact-section {
+            max-width: 1100px;
+            margin: 140px auto 80px;
+            /* Margin atas dibuat besar agar tidak tertutup navbar */
+            padding: 0 20px;
+            flex: 1;
+            width: 100%;
+            animation: fadeInDown 0.8s ease;
+        }
+
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 50px;
+            align-items: flex-start;
+        }
+
+        /* Left Side: Info */
+        .contact-info h2 {
+            color: white;
+            font-size: 2.5em;
+            margin-bottom: 5px;
+        }
+
+        .contact-info .underline {
+            width: 50px;
+            height: 4px;
+            background: linear-gradient(90deg, #6366f1, #a855f7);
+            border-radius: 2px;
+            margin-bottom: 25px;
+        }
+
+        .contact-info p {
+            color: #cbd5e1;
+            font-size: 0.95em;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .info-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .info-card {
+            display: flex;
+            align-items: center;
+            background: rgba(30, 41, 59, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 15px;
+            transition: 0.3s ease;
+        }
+
+        .info-card:hover {
+            transform: translateX(10px);
+            background: rgba(30, 41, 59, 0.9);
+            border-color: rgba(99, 102, 241, 0.3);
+        }
+
+        .icon-circle {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #6366f1, #a855f7);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            color: white;
+            margin-right: 20px;
+            flex-shrink: 0;
+            box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
+        }
+
+        .info-text h4 {
+            color: white;
+            font-size: 1.1em;
+            margin-bottom: 3px;
+        }
+
+        .info-text span {
+            color: #94a3b8;
+            font-size: 0.9em;
+        }
+
+        /* Right Side: Form */
+        .contact-form-container {
+            background: rgba(30, 41, 59, 0.4);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            color: white;
+            margin-bottom: 8px;
+            font-size: 0.95em;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 15px;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: white;
+            font-family: inherit;
+            font-size: 0.95em;
+            transition: 0.3s;
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: #64748b;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #6366f1;
+            box-shadow: 0 0 15px rgba(99, 102, 241, 0.2);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(90deg, #6366f1, #a855f7);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.05em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s ease;
+            box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 25px rgba(99, 102, 241, 0.5);
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav {
+                width: 95%;
+                padding: 10px 20px;
+            }
+
+            nav ul {
+                gap: 10px;
+            }
+
+            nav ul li a {
+                font-size: 0.8em;
+            }
+
+            .contact-container {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .contact-form-container {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">RFO</a>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="experience.html">Experience</a></li>
+                <li><a href="Project.html">Projects</a></li>
+                <!-- Class 'active' dipindah ke menu Contact karena kita sedang di halaman Contact -->
+                <li class="active"><a href="contact.html">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content Contact -->
+    <section class="contact-section">
+        <div class="contact-container">
+
+            <!-- Left Side: Contact Info -->
+            <div class="contact-info">
+                <h2>Hubungi Saya</h2>
+                <div class="underline"></div>
+                <p>Ini adalah ruang dokumentasi karya dan pengembangan diri saya. Untuk kolaborasi atau kebutuhan
+                    proyek, Anda dapat menghubungi saya melalui formulir atau media sosial di bawah ini.</p>
+
+                <div class="info-cards">
+                    <!-- Email Card -->
+                    <div class="info-card">
+                        <div class="icon-circle">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="info-text">
+                            <h4>Email</h4>
+                            <span>orthegarafael14@gmail.com</span>
+                        </div>
+                    </div>
+
+                    <!-- WhatsApp Card -->
+                    <div class="info-card">
+                        <div class="icon-circle">
+                            <i class="fab fa-whatsapp"></i>
+                        </div>
+                        <div class="info-text">
+                            <h4>WhatsApp</h4>
+                            <span>+6282298438653</span> <!-- Ganti dengan nomor aslimu -->
+                        </div>
+                    </div>
+
+                    <!-- LinkedIn Card -->
+                    <div class="info-card">
+                        <div class="icon-circle">
+                            <i class="fab fa-linkedin-in"></i>
+                        </div>
+                        <div class="info-text">
+                            <h4>LinkedIn</h4>
+                            <span>linkedin.com/in/rafael-febriano-orthega-23466b408</span>
+                            <!-- Ganti dengan username aslimu -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side: Contact Form -->
+            <div class="contact-form-container">
+                <form action="https://formspree.io/f/mojrqoge" method="POST">
+                    <div class="form-group">
+                        <label for="name">Nama Lengkap</label>
+                        <input type="text" id="name" placeholder="John Doe" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" placeholder="john@example.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">Pesan</label>
+                        <textarea id="message" placeholder="Ceritakan tentang proyek Anda..." required></textarea>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Kirim Pesan</button>
+                </form>
+            </div>
+
+        </div>
+    </section>
+    <script>
+        window.addEventListener("load", () => {
+            setTimeout(() => {
+                document.querySelector("nav").classList.add("show");
+            }, 100); // Muncul setelah 0.1 detik halaman dimuat
+        });
+    </script>
+</body>
+
+</html>

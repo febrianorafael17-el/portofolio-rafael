@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photography & Videography - My Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: radial-gradient(circle at 20% 20%, rgba(102, 126, 234, 0.25), transparent 40%),
+                radial-gradient(circle at 80% 80%, rgba(240, 147, 251, 0.2), transparent 40%),
+                #0f172a;
+            color: #e2e8f0;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 80px 0px 0px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Navbar Styles */
+        nav {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(12px);
+            border-radius: 50px;
+            padding: 12px 40px;
+            z-index: 1000;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            width: 90%;
+            max-width: 900px;
+        }
+
+        nav .nav-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+            width: 100%;
+        }
+
+        nav .logo {
+            color: white;
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-right: 10px;
+            text-decoration: none;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+
+        nav ul li {
+            position: relative;
+        }
+
+        nav ul li a {
+            position: relative;
+            color: #e2e8f0;
+            text-decoration: none;
+            font-size: 0.9em;
+            padding: 5px 10px;
+            transition: 0.3s;
+        }
+
+        nav ul li a::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -5px;
+            width: 0%;
+            height: 2px;
+            background: linear-gradient(90deg, #38bdf8, #f472b6);
+            transition: width 0.3s ease;
+        }
+
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        /* Active Link */
+        nav ul li a.active {
+            color: #38bdf8;
+        }
+
+        nav ul li a.active::after {
+            width: 100%;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            flex: 1;
+            width: 100%;
+        }
+
+        /* Header */
+        .page-header {
+            text-align: center;
+            margin-bottom: 60px;
+            animation: fadeInDown 0.8s ease;
+        }
+
+        .page-header h1 {
+            font-size: 3em;
+            margin-bottom: 15px;
+            margin-top: 20px;
+            background: linear-gradient(135deg, #38bdf8, #f472b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-header p {
+            font-size: 1.1em;
+            color: #cbd5e1;
+        }
+
+        /* Gallery Container */
+        .gallery-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        /* Project Card */
+        .project-card {
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            border-radius: 15px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        .project-card:nth-child(2) {
+            animation-delay: 0.1s;
+        }
+
+        .project-card:nth-child(3) {
+            animation-delay: 0.2s;
+        }
+
+        .project-card:nth-child(4) {
+            animation-delay: 0.3s;
+        }
+
+        .project-card:nth-child(5) {
+            animation-delay: 0.4s;
+        }
+
+        .project-card:hover {
+            transform: translateY(-15px);
+            border-color: rgba(148, 163, 184, 0.5);
+            box-shadow: 0 25px 50px rgba(102, 126, 234, 0.3);
+        }
+
+        /* Project Image */
+        .project-image {
+            position: relative;
+            width: 100%;
+            height: 250px;
+            overflow: hidden;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .project-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .project-card:hover .project-image img {
+            transform: scale(1.1) rotate(2deg);
+        }
+
+        /* Overlay */
+        .project-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .project-card:hover .project-overlay {
+            opacity: 1;
+        }
+
+        .overlay-icon {
+            color: white;
+            font-size: 3em;
+            animation: bounceInScale 0.4s ease;
+            transition: all 0.4s ease;
+            cursor: pointer;
+        }
+
+        .project-card:hover .overlay-icon {
+            transform: scale(1.3) rotate(360deg);
+        }
+
+        .project-content {
+            padding: 25px;
+        }
+
+        .project-category {
+            display: inline-block;
+            background: linear-gradient(135deg, #38bdf8, #06b6d4);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.75em;
+            font-weight: 600;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+        }
+
+        .project-title {
+            font-size: 1.4em;
+            margin-bottom: 10px;
+            color: #f1f5f9;
+            font-weight: 700;
+        }
+
+        .project-description {
+            color: #cbd5e1;
+            font-size: 0.95em;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .project-meta {
+            display: flex;
+            gap: 15px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(148, 163, 184, 0.2);
+        }
+
+        .meta-item {
+            flex: 1;
+            text-align: center;
+            font-size: 0.85em;
+        }
+
+        .meta-item i {
+            color: #38bdf8;
+            margin-right: 5px;
+        }
+
+        .youtube-link {
+            display: inline-block;
+            margin-top: 12px;
+            color: white;
+            background: #ff0000;
+            padding: 8px 15px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.85em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .youtube-link:hover {
+            background: #cc0000;
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(255, 0, 0, 0.3);
+        }
+
+        .youtube-link i {
+            margin-right: 5px;
+        }
+
+        .drive-link {
+            display: inline-block;
+            margin-top: 12px;
+            margin-left: 8px;
+            color: white;
+            background: #4285F4;
+            padding: 8px 15px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.85em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .drive-link:hover {
+            background: #3367d6;
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(66, 133, 244, 0.3);
+        }
+
+        .drive-link i {
+            margin-right: 5px;
+        }
+
+        /* Modal/Lightbox Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            position: relative;
+            background: white;
+            border-radius: 10px;
+            width: auto;
+            height: auto;
+            animation: zoomIn 0.3s ease;
+        }
+
+        .modal-content img {
+            max-width: 90vw;
+            max-height: 90vh;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            display: block;
+            border-radius: 10px;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            font-size: 2.5em;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .modal-close:hover {
+            transform: scale(1.2);
+            color: #38bdf8;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes zoomIn {
+            from {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes bounceInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Footer Styles */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            margin-top: auto;
+        }
+
+        footer p {
+            margin: 10px 0;
+            font-size: 1em;
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .social-icons a {
+            color: white;
+            font-size: 1.5em;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .social-icons a:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+        .social-icons .ig:hover {
+            background: #E4405F;
+        }
+
+        .social-icons .linkedin:hover {
+            background: #0077b5;
+        }
+
+        .social-icons .github:hover {
+            background: #333;
+        }
+
+        .social-icons .gmail:hover {
+            background: #ea4335;
+        }
+
+        /* Navigation Arrows */
+        .nav-arrows {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 30px;
+            z-index: 999;
+            pointer-events: none;
+        }
+
+        .prev-project-nav,
+        .next-project-nav {
+            pointer-events: auto;
+        }
+
+        .prev-project-btn,
+        .next-project-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: white;
+            font-size: 0.9em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            padding: 15px 10px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(90deg, #6366f1, #ec4899);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+        }
+
+        .prev-project-btn:hover,
+        .next-project-btn:hover {
+            color: white;
+            transform: translateX(-5px);
+            box-shadow: 0 15px 40px rgba(236, 72, 153, 0.4);
+        }
+
+        .next-project-btn:hover {
+            transform: translateX(5px);
+        }
+
+        .arrow-icon {
+            font-size: 1.5em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-arrows {
+                flex-direction: column;
+                width: auto;
+                left: 10px;
+                right: 10px;
+                top: auto;
+                bottom: 150px;
+                padding: 0;
+                justify-content: center;
+                gap: 20px;
+            }
+
+            .prev-project-nav,
+            .next-project-nav {
+                position: absolute;
+            }
+
+            .prev-project-nav {
+                left: 10px;
+            }
+
+            .next-project-nav {
+                right: 10px;
+            }
+
+            .prev-project-btn,
+            .next-project-btn {
+                writing-mode: horizontal-tb;
+                flex-direction: row-reverse;
+                gap: 8px;
+                padding: 10px 15px;
+            }
+
+            .prev-project-btn:hover,
+            .next-project-btn:hover {
+                transform: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .page-header h1 {
+                font-size: 2em;
+            }
+
+            nav {
+                width: 95%;
+                padding: 10px 15px;
+            }
+
+            nav .nav-container {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 8px;
+            }
+
+            nav ul li a {
+                font-size: 0.8em;
+                padding: 4px 8px;
+            }
+
+            .gallery-container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .project-image {
+                height: 200px;
+            }
+
+            .project-title {
+                font-size: 1.2em;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">RFO</a>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="experience.html">Experience</a></li>
+                <li><a href="Project.html">Projects</a></li>
+                <li><a href="Contact.html" class="nav-link">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Header -->
+        <div class="page-header">
+            <h1>Photography & Videography</h1>
+            <p>Koleksi hasil karya fotografi dan videografi saya dari berbagai acara, kampanye, dan proyek personal.</p>
+        </div>
+
+        <!-- Gallery -->
+        <div class="gallery-container">
+            <!-- Project 1 -->
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="foto10.jpg" alt="Event Photography">
+                    <div class="project-overlay">
+                        <div class="overlay-icon">
+                            <i class="fas fa-video"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-content">
+                    <span class="project-category">Videography</span>
+                    <h3 class="project-title">Video Perpustakaan Sekolah</h3>
+                    <p class="project-description"> Menjadi perwakilan dalam pembuatan video untuk Akreditasi
+                        Perpustakaan Sekolah.</p>
+                    <div class="project-meta">
+                        <div class="meta-item">
+                            <i class="fas fa-video"></i> Canon
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-star"></i> 4.8
+                        </div>
+                    </div>
+                    <a href="https://youtu.be/dfw11qsBQq0?si=IxAwgLPmljTbjTeV" target="_blank" class="youtube-link">
+                        <i class="fab fa-youtube"></i> Tonton di YouTube
+                    </a>
+                </div>
+            </div>
+
+            <!-- Project 2 -->
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="foto11.jpg" alt="Videography">
+                    <div class="project-overlay">
+                        <div class="overlay-icon">
+                            <i class="fas fa-video"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-content">
+                    <span class="project-category">Videography</span>
+                    <h3 class="project-title">Video Mitigasi Bencana</h3>
+                    <p class="project-description">Menjadi perwakilan dalam pembuatan video untuk kampanye mitigasi
+                        bencana alam yang diselenggarakan oleh dinas untuk setiap sekolah.</p>
+                    <div class="project-meta">
+                        <div class="meta-item">
+                            <i class="fas fa-film"></i> Capcut
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-star"></i> 4.7
+                        </div>
+                    </div>
+                    <a href="https://drive.google.com/file/d/1gfi9GY1i9P_B6Tx8yyNDiEs81Uh1Tnw4/view?usp=sharing"
+                        target="_blank" class="drive-link">
+                        <i class="fab fa-google-drive"></i> Lihat di Drive
+                    </a>
+                </div>
+            </div>
+
+            <!-- Project 3 -->
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="foto12.jpg" alt="Portrait Photography">
+                    <div class="project-overlay">
+                        <div class="overlay-icon">
+                            <i class="fas fa-camera"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-content">
+                    <span class="project-category">Portrait</span>
+                    <h3 class="project-title">Fotografi Portrait</h3>
+                    <p class="project-description">Sesi fotografi portrait yang menangkap kepribadian dan ekspresi alami
+                        dari subjek dengan pencahayaan dan komposisi profesional.</p>
+                    <div class="project-meta">
+                        <div class="meta-item">
+                            <i class="fas fa-camera"></i> Portrait
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-star"></i> 4.9
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 4 -->
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="foto14.jpg" alt="Product Photography">
+                    <div class="project-overlay">
+                        <div class="overlay-icon">
+                            <i class="fas fa-camera"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-content">
+                    <span class="project-category">Photography</span>
+                    <h3 class="project-title">Fotografi Negative Space</h3>
+                    <p class="project-description">Fotografi dengan teknik negative space untuk menciptakan komposisi
+                        yang menarik dengan kesan horor.</p>
+                    <div class="project-meta">
+                        <div class="meta-item">
+                            <i class="fas fa-camera"></i> Photography
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-star"></i> 4.8
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 5 -->
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="foto13.jpg" alt="Drone & Landscape">
+                    <div class="project-overlay">
+                        <div class="overlay-icon">
+                            <i class="fas fa-camera"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-content">
+                    <span class="project-category">Landscape</span>
+                    <h3 class="project-title">Fotografi Landscape</h3>
+                    <p class="project-description">Fotografi landscape dengan pencahayaan yang gelap serta color grading
+                        hijau sehingga menunjukkan kesan horor dramatic.</p>
+                    <div class="project-meta">
+                        <div class="meta-item">
+                            <i class="fas fa-camera"></i> Photography
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-star"></i> 4.9
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Arrows -->
+    <div class="nav-arrows">
+        <div class="prev-project-nav">
+            <a href="Project2.html" class="prev-project-btn">
+                <span class="arrow-icon"><i class="fas fa-arrow-left"></i></span>
+                <span>Creative</span>
+            </a>
+        </div>
+        <div class="next-project-nav">
+            <a href="Project4.html" class="next-project-btn">
+                <span class="arrow-icon"><i class="fas fa-arrow-right"></i></span>
+                <span>Organization</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Rafael Febriano Orthega.</p>
+        <div class="social-icons">
+            <a href="https://instagram.com/xfebianz_" target="_blank" class="ig">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://linkedin.com/in/rafael-febriano-orthega-23466b408" target="_blank" class="linkedin">
+                <i class="fab fa-linkedin"></i>
+            </a>
+            <a href="https://github.com/febrianorafael17-el" target="_blank" class="github">
+                <i class="fab fa-github"></i>
+            </a>
+            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=orthegarafael14@gmail.com" target="_blank"
+                class="gmail">
+                <i class="fas fa-envelope"></i>
+            </a>
+        </div>
+    </footer>
+
+    <!-- Modal/Lightbox -->
+    <div id="imageModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal()">&times;</span>
+            <img id="modalImage" src="" alt="">
+        </div>
+    </div>
+
+    <script>
+        // Open modal with full size image
+        const projectCards = document.querySelectorAll('.project-card');
+        const modal = document.getElementById('imageModal');
+        const modalImage = document.getElementById('modalImage');
+
+        projectCards.forEach(card => {
+            const img = card.querySelector('.project-image img');
+            card.addEventListener('click', function () {
+                modalImage.src = img.src;
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+        });
+
+        // Close modal when clicking on modal background
+        modal.addEventListener('click', function (e) {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+
+        // Close modal function
+        function closeModal() {
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+
+</html>
